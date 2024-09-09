@@ -3,8 +3,10 @@ package real_debrid
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"net/url"
+	"slog"
 )
 
 func instantAvailability(hash string) (InstantAvailabilityResponse, error) {
@@ -25,8 +27,12 @@ func instantAvailability(hash string) (InstantAvailabilityResponse, error) {
 
 	switch response.StatusCode {
 	case 200:
-		var instantAvailability = InstantAvailabilityResponse{}
-		if err := json.NewDecoder(response.Body).Decode(&instantAvailability); err != nil {
+		// Log the raw JSON response
+		bodyBytes, _ := io.ReadAll(response.Body)
+		slog.Debug("Raw JSON response: " + string(bodyBytes))
+
+		var instantAvailability InstantAvailabilityResponse
+		if err := json.Unmarshal(bodyBytes, &instantAvailability); err != nil {
 			return InstantAvailabilityResponse{}, err
 		}
 

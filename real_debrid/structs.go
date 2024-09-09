@@ -6,7 +6,7 @@ type InstantAvailabilityFile struct {
 }
 
 // TODO: Idk if this is quite correct yet
-type InstantAvailabilityResponse map[string]map[string][]map[string]InstantAvailabilityFile
+type InstantAvailabilityResponse []map[string][]InstantAvailabilityFile
 
 type Torrent struct {
 	ID       string   `json:"id"`
