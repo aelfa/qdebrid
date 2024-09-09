@@ -50,11 +50,13 @@ func filesAvailability(hash string, ids []string) error {
 		idsMap[id] = true
 	}
 
-	// Ensure that available[hash]["rd"] is a slice of InstantAvailabilityFile
-	if files, ok := available[hash]["rd"]; ok {
-		for _, file := range files {
-			if _, exists := idsMap[file.FileName]; exists {
-				return nil // Found a matching file
+	// Ensure that available[hash] is a map and contains "rd"
+	if filesMap, ok := available[hash]; ok {
+		if files, ok := filesMap["rd"]; ok {
+			for _, file := range files {
+				if _, exists := idsMap[file.FileName]; exists {
+					return nil // Found a matching file
+				}
 			}
 		}
 	}
