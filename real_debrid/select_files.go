@@ -50,8 +50,8 @@ func filesAvailability(hash string, ids []string) error {
 		idsMap[id] = true
 	}
 
-	// Ensure that available[hash] is a map and contains "rd"
-	if filesMap, ok := available[hash].(map[string][]InstantAvailabilityFile); ok {
+	// Directly access available[hash] without type assertion
+	if filesMap, ok := available[hash]; ok {
 		if files, ok := filesMap["rd"]; ok {
 			for _, file := range files {
 				if _, exists := idsMap[file.FileName]; exists {
