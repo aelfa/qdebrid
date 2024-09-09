@@ -6,7 +6,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"slog"
+	"log/slog"
 )
 
 func instantAvailability(hash string) (InstantAvailabilityResponse, error) {
