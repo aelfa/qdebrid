@@ -50,18 +50,13 @@ func filesAvailability(hash string, ids []string) error {
 		idsMap[id] = true
 	}
 
-	for _, variant := range available[hash]["rd"] {
-		if len(variant) != len(ids) {
-			continue
-		}
-
-		for _, id := range variant { // Ensure variant is a slice
-			if !idsMap[id] {
-				continue
+	// Ensure that available[hash]["rd"] is a slice of InstantAvailabilityFile
+	if files, ok := available[hash]["rd"]; ok {
+		for _, file := range files {
+			if _, exists := idsMap[file.FileName]; exists {
+				return nil // Found a matching file
 			}
 		}
-
-		return nil
 	}
 
 	return fmt.Errorf("No cached files available")
