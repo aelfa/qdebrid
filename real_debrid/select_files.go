@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
-	"strings
+	"strings"
 )
 
 func filterFiles(torrent TorrentInfoResponse) ([]string, error) {
@@ -21,9 +21,10 @@ func filterFiles(torrent TorrentInfoResponse) ([]string, error) {
 			continue
 		}
 
-		// Assuming you want to check the file name length
-		if len(file.FileName) > 0 {
-			ids = append(ids, strconv.Itoa(file.ID))
+		for _, extension := range settings.QDebrid.AllowedFileTypes {
+			if strings.HasSuffix(file.Path, extension) {
+				ids = append(ids, strconv.Itoa(file.ID))
+			}
 		}
 	}
 
