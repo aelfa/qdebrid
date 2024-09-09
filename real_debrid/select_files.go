@@ -50,15 +50,14 @@ func filesAvailability(hash string, ids []string) error {
 		idsMap[id] = true
 	}
 
-variants:
 	for _, variant := range available[hash]["rd"] {
 		if len(variant) != len(ids) {
 			continue
 		}
 
-		for ids := range variant {
-			if !idsMap[ids] {
-				continue variants
+		for _, id := range variant { // Ensure variant is a slice
+			if !idsMap[id] {
+				continue
 			}
 		}
 
